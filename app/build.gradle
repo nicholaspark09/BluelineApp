@@ -1,9 +1,21 @@
 apply plugin: 'com.android.application'
 apply plugin: 'me.tatarka.retrolambda'
 
+def versionMajor = 0
+def versionMinor = 0
+def versionPatch = 0
+def versionBuild = System.getProperty('buildNumber',"1") as int
+def isCi = "true".equals(System.getProperty("isCi"))
+def preDexEnabled = "true".equals(System.getProperty("preDex","true"))
+
+
+
 android {
     compileSdkVersion 24
     buildToolsVersion "24.0.3"
+    dexOptions{
+        preDexLibraries = preDexEnabled && !isCi
+    }
     defaultConfig {
         applicationId "com.apps.nicholaspark.bluelineapp"
         minSdkVersion 16
