@@ -16,7 +16,6 @@ import io.reactivex.ObservableOnSubscribe;
 import io.reactivex.functions.Cancellable;
 
 import static android.os.Build.VERSION_CODES.HONEYCOMB;
-import static com.f2prateek.rx.preferences2.Preconditions.checkNotNull;
 import static com.google.common.base.Preconditions.checkNotNull;
 
 //TODO Ripped from https://github.com/f2prateek/rx-preferences/blob/2.x/rx-preferences

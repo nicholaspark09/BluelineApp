@@ -1,5 +1,7 @@
 package com.apps.nicholaspark.bluelineapp;
 
+import android.app.Application;
+
 import com.apps.nicholaspark.bluelineapp.data.DataModule;
 import com.apps.nicholaspark.bluelineapp.di.ApplicationScope;
 
@@ -19,7 +21,7 @@ final class BluelineAppModule {
         this.app = app;
     }
 
-    @Provides @ApplicationScope BluelineApp provideApp(){
+    @Provides @ApplicationScope Application provideApp(){
         return app;
     }
 }
