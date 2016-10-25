@@ -13,6 +13,7 @@ import com.apps.nicholaspark.bluelineapp.data.github.GithubRemoteDataSource;
 import com.apps.nicholaspark.bluelineapp.di.ApplicationScope;
 import com.apps.nicholaspark.bluelineapp.preferences2.RxSharedPreferences;
 import com.apps.nicholaspark.bluelineapp.repository.GithubRepository;
+import com.apps.nicholaspark.bluelineapp.ui.intro.IntroModule;
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
 import com.squareup.sqlbrite.BriteDatabase;
@@ -22,6 +23,8 @@ import javax.inject.Named;
 
 import dagger.Module;
 import dagger.Provides;
+import io.reactivex.Scheduler;
+import io.reactivex.android.schedulers.AndroidSchedulers;
 import rx.schedulers.Schedulers;
 import timber.log.Timber;
 
@@ -30,7 +33,7 @@ import static com.jakewharton.byteunits.DecimalByteUnit.MEGABYTES;
 /**
  * Created by nicholaspark on 10/20/16.
  */
-@Module(includes = ApiModule.class)
+@Module(includes = {ApiModule.class})
 public class DataModule {
     private static final String SHARED_PREFERENCES_LOCATION = "my.account.prefs";
     private static final int DISK_CACHE_SIZE = (int) MEGABYTES.toBytes(50);
@@ -76,5 +79,9 @@ public class DataModule {
 
     @Provides @ApplicationScope GithubRepository provideGithubRepository(@Named("localDataSource") GithubDataSource localSource, @Named("remoteDataSource") GithubDataSource remoteSource){
         return new GithubRepository(localSource,remoteSource);
+    }
+
+    @Provides @ApplicationScope Scheduler providesMainThread(){
+        return AndroidSchedulers.mainThread();
     }
 }

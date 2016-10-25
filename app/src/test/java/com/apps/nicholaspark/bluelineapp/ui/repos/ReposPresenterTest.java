@@ -11,7 +11,11 @@ import java.util.Collections;
 import java.util.List;
 
 import io.reactivex.Observable;
+import io.reactivex.Scheduler;
+import io.reactivex.android.schedulers.AndroidSchedulers;
 
+import static org.junit.Assert.assertThat;
+import static org.hamcrest.CoreMatchers.is;
 import static org.mockito.Mockito.verify;
 import static org.mockito.Mockito.when;
 
@@ -23,17 +27,19 @@ public class ReposPresenterTest {
     private ReposPresenter presenter;
     private static final String username = "nicholaspark09";
     @Mock GithubRepository repository;
+    @Mock Scheduler scheduler;
 
     @Before
     public void setupReposPresenterTest(){
         MockitoAnnotations.initMocks(this);
-        presenter = new ReposPresenter(repository);
+        presenter = new ReposPresenter(repository,scheduler);
     }
 
     @Test public void loadReposCalled_NoReposAvailable(){
         setReposNotAvailable();
         presenter.loadRepos();
         verify(repository).getRepos(presenter.username);
+        assertThat(repository.mCachedRepositories.size(),is(0));
     }
 
     //TODO Please finish the test case

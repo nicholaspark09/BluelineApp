@@ -4,16 +4,16 @@ apply plugin: 'me.tatarka.retrolambda'
 def versionMajor = 0
 def versionMinor = 0
 def versionPatch = 0
-def versionBuild = System.getProperty('buildNumber',"1") as int
+def versionBuild = System.getProperty('buildNumber', "1") as int
 def isCi = "true".equals(System.getProperty("isCi"))
-def preDexEnabled = "true".equals(System.getProperty("preDex","true"))
+def preDexEnabled = "true".equals(System.getProperty("preDex", "true"))
 
 
 
 android {
     compileSdkVersion 24
     buildToolsVersion "24.0.3"
-    dexOptions{
+    dexOptions {
         preDexLibraries = preDexEnabled && !isCi
     }
     defaultConfig {
@@ -33,6 +33,14 @@ android {
             minifyEnabled false
             proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
         }
+    }
+    sourceSets {
+        main {
+            res.srcDirs = ['src/main/res', 'src/main/res-repos', 'src/main/res-intro', 'src/main/res-child', 'src/main/res-createaccount']
+        }
+    }
+    packagingOptions {
+        pickFirst 'META-INF/rxjava.properties'
     }
 }
 
@@ -79,6 +87,7 @@ dependencies {
 
     //UI Management
     compile 'com.bluelinelabs:conductor:2.0.3'
+    compile 'com.bluelinelabs:conductor-support:2.0.3'
 
     //Utilities
     compile 'com.jakewharton:butterknife:' + BUTTERKNIFE_VERSION

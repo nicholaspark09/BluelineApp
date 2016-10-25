@@ -18,7 +18,7 @@ import retrofit2.http.Path;
 public interface GithubApiService {
     String ENDPOINT = "https://api.github.com";
 
-    @GET("/users/{user}/repos")
+    @GET("users/{user}/repos")
     Observable<List<Repo>> listRepos(@Path("user") String user);
 
     class Creator{

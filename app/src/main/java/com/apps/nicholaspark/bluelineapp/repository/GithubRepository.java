@@ -13,6 +13,7 @@ import javax.inject.Inject;
 import javax.inject.Named;
 
 import io.reactivex.Observable;
+import io.reactivex.disposables.CompositeDisposable;
 
 /**
  * Created by nicholaspark on 10/21/16.
@@ -21,8 +22,9 @@ import io.reactivex.Observable;
 public class GithubRepository implements GithubDataSource {
     private final GithubDataSource localDataSource;
     private final GithubDataSource remoteDataSource;
+    CompositeDisposable compositeDisposable;
     @VisibleForTesting
-    Map<Integer,Repo> mCachedRepositories;
+    public Map<Integer,Repo> mCachedRepositories;
     @VisibleForTesting
     boolean mCacheIsDirty = false;
 
@@ -33,6 +35,9 @@ public class GithubRepository implements GithubDataSource {
 
     @Override
     public Observable<List<Repo>> getRepos(String username) {
+        if(mCachedRepositories != null && !mCacheIsDirty){
+            return null;
+        }
         return null;
     }
 
